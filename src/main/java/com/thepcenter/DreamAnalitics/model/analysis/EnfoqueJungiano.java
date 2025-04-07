@@ -13,7 +13,7 @@ public class EnfoqueJungiano implements Enfoque{
 
     @Override
     public StatisticalAnalyzer getStatisticalAnalyzer() {
-        return null;
+        return new JungianStatisticalAnalyzer();
     }
 
     @Override
