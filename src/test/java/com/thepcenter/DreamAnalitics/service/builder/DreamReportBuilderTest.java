@@ -15,7 +15,6 @@ public class DreamReportBuilderTest {
 
     @Test
     void shouldBuildDynamicReportFromDream() {
-        // Arrange
         Dream dream = new Dream("Estaba volando sobre un mar oscuro");
         SymbolicAnalyzer symbolic = new SymbolicAnalyzer();
         EmotionalAnalyzer emotional = new EmotionalAnalyzer();
