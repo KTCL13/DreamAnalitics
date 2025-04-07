@@ -1,6 +1,5 @@
 package com.thepcenter.DreamAnalitics.model;
 
-import java.io.Serializable;
 
 public class Dream {
     private String descripcion;

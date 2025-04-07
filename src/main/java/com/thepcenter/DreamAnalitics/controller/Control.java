@@ -22,13 +22,13 @@ public class Control {
 
     public void iniciar() {
         int opcion;
+        if (repository == null) {
+            inicializarRepositorio(); // ¡Siempre cargar el repositorio al inicio!
+        }
         do {
             opcion = view.mostrarMenuPrincipal();
             switch (opcion) {
                 case 1:
-                    if (repository == null) {
-                        inicializarRepositorio(); // Solo la primera vez
-                    }
                     mostrarMenuRegistroSueno();
                     break;
                 case 2:
