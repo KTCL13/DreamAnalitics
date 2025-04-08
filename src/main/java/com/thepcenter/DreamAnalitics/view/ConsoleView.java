@@ -73,11 +73,12 @@ public class ConsoleView {
 
     public String seleccionarEnfoqueTerapéutico() {
 
-        System.out.println("Seleccione enfoque terapéutico:");
-        System.out.println("1. Jungiano");
-        System.out.println("2. Conductual");
+        System.out.println("\n🎯 Seleccione enfoque terapéutico:");
+        System.out.println("1. Jungiano (simbólico + emocional)");
+        System.out.println("2. Conductual (cognitivo + estadístico)");
         System.out.print("Opción: ");
         int opcion = scanner.nextInt();
+        scanner.nextLine();
         scanner.nextLine(); // limpiar buffer
 
         switch (opcion) {
@@ -90,6 +91,7 @@ public class ConsoleView {
                 return "jungiano";
         }
     }
+
     public void mostrarSueñosEnumerados(List<Dream> dreams) {
         System.out.println("Sueños registrados:");
         for (int i = 0; i < dreams.size(); i++) {
