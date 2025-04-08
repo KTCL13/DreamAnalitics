@@ -8,6 +8,8 @@ import com.thepcenter.DreamAnalitics.model.analysis.EnfoqueConductual;
 import com.thepcenter.DreamAnalitics.model.analysis.EnfoqueJungiano;
 import com.thepcenter.DreamAnalitics.view.ConsoleView;
 
+import main.java.com.thepcenter.DreamAnalitics.model.analysis.Analyzer;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -98,6 +100,7 @@ public class Control {
     public Enfoque getEnfoqueSeleccionado() {
         return enfoqueSeleccionado;
     }
+
     private void analizarSuenoSeleccionado() {
         if (repository == null || repository.getAllDreams().isEmpty()) {
             view.mostrarMensaje("⚠️ No hay sueños registrados para analizar.");
@@ -131,6 +134,10 @@ public class Control {
         resultado.append("🧩 Análisis cognitivo:\n")
                 .append(enfoqueSeleccionado.getCognitiveAnalyzer().analyze(seleccionado)).append("\n");
 
+        for (Analyzer analyzer : enfoqueSeleccionado.getAnalizadoresActivos()) {
+            resultado.append(analyzer.getNombre()).append(":\n")
+                    .append(analyzer.analyze(seleccionado)).append("\n\n");
+        }
         view.mostrarMensaje(resultado.toString());
     }
 }
