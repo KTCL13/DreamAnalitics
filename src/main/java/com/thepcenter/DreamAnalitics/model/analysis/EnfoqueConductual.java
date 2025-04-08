@@ -23,4 +23,9 @@ public class EnfoqueConductual implements Enfoque {
     public CognitiveAnalyzer getCognitiveAnalyzer() {
         return new ConductualCognitiveAnalyzer();
     }
+
+    @Override
+    public List<String> getAnalizadoresActivos() {
+        return Arrays.asList("symbolic", "emotion");
+    }
 }

@@ -23,4 +23,9 @@ public class EnfoqueJungiano implements Enfoque {
     public CognitiveAnalyzer getCognitiveAnalyzer() {
         return new JungianCognitiveAnalyzer();
     }
+
+    @Override
+    public List<String> getAnalizadoresActivos() {
+        return Arrays.asList("symbolic", "emotion");
+    }
 }
