@@ -1,5 +1,7 @@
 package com.thepcenter.DreamAnalitics.model.analysis;
 
+import java.util.Arrays;
+import java.util.List;
 
 public class EnfoqueConductual implements Enfoque {
     @Override
@@ -20,5 +22,10 @@ public class EnfoqueConductual implements Enfoque {
     @Override
     public CognitiveAnalyzer getCognitiveAnalyzer() {
         return new ConductualCognitiveAnalyzer();
+    }
+
+    @Override
+    public List<Analyzer> getAnalizadoresActivos() {
+        return Arrays.asList(getCognitiveAnalyzer(), getStatisticalAnalyzer());
     }
 }
