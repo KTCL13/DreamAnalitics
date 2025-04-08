@@ -1,4 +1,4 @@
-package com.thepcenter.DreamAnalitics.model.analysis;
+package main.java.com.thepcenter.DreamAnalitics.model.analysis;
 
 import com.thepcenter.DreamAnalitics.model.Dream;
 
