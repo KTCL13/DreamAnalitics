@@ -134,10 +134,6 @@ public class Control {
         resultado.append("🧩 Análisis cognitivo:\n")
                 .append(enfoqueSeleccionado.getCognitiveAnalyzer().analyze(seleccionado)).append("\n");
 
-        for (Analyzer analyzer : enfoqueSeleccionado.getAnalizadoresActivos()) {
-            resultado.append(analyzer.getNombre()).append(":\n")
-                    .append(analyzer.analyze(seleccionado)).append("\n\n");
-        }
         view.mostrarMensaje(resultado.toString());
     }
 }
