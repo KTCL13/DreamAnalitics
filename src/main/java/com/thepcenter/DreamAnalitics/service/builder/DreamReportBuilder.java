@@ -9,7 +9,7 @@ public class DreamReportBuilder implements ReportBuilder {
     private final DreamReport report = new DreamReport();
 
     public DreamReportBuilder withSummary(Dream dream) {
-        report.setSummary("Resumen: " + dream.getDescription());
+        report.setSummary("Resumen: " + dream.getDescripcion());
         return this;
     }
 
