@@ -1,12 +1,12 @@
 package com.thepcenter.DreamAnalitics.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DreamReport {
     private String summary;
-    private String symbolicSection;
-    private String emotionalSection;
-    private String cognitiveSection;
-    private String statisticSection;
-    private String graphicalInsights;
+    private List<String> analysisSections = new ArrayList<>();
+    private String graphicInterpretation;
 
     public String getSummary() {
         return summary;
@@ -16,43 +16,45 @@ public class DreamReport {
         this.summary = summary;
     }
 
-    public String getSymbolicSection() {
-        return symbolicSection;
+    public List<String> getAnalysisSections() {
+        return analysisSections;
     }
 
-    public void setSymbolicSection(String symbolicSection) {
-        this.symbolicSection = symbolicSection;
+    public void setAnalysisSections(List<String> analysisSections) {
+        this.analysisSections = analysisSections;
     }
 
-    public String getEmotionalSection() {
-        return emotionalSection;
+    public String getGraphicInterpretation() {
+        return graphicInterpretation;
     }
 
-    public void setEmotionalSection(String emotionalSection) {
-        this.emotionalSection = emotionalSection;
+    public void setGraphicInterpretation(String graphicInterpretation) {
+        this.graphicInterpretation = graphicInterpretation;
     }
 
-    public String getCognitiveSection() {
-        return cognitiveSection;
-    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("========== INFORME DE SUEÑO ==========\n\n");
 
-    public void setCognitiveSection(String cognitiveSection) {
-        this.cognitiveSection = cognitiveSection;
-    }
+        if (summary != null && !summary.isBlank()) {
+            sb.append("📝 Resumen:\n").append(summary).append("\n\n");
+        }
 
-    public String getStatisticSection() {
-        return statisticSection;
-    }
+        if (analysisSections != null && !analysisSections.isEmpty()) {
+            sb.append("📊 Secciones de Análisis:\n");
+            for (String section : analysisSections) {
+                sb.append("- ").append(section).append("\n");
+            }
+            sb.append("\n");
+        }
 
-    public void setStatisticSection(String statisticSection) {
-        this.statisticSection = statisticSection;
-    }
+        if (graphicInterpretation != null && !graphicInterpretation.isBlank()) {
+            sb.append("🖼️ Interpretación Gráfica:\n").append(graphicInterpretation).append("\n");
+        }
 
-    public String getGraphicalInsights() {
-        return graphicalInsights;
-    }
+        sb.append("======================================\n");
 
-    public void setGraphicalInsights(String graphicalInsights) {
-        this.graphicalInsights = graphicalInsights;
+        return sb.toString();
     }
 }

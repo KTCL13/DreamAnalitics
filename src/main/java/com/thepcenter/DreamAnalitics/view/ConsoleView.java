@@ -108,4 +108,20 @@ public class ConsoleView {
         } while (opcion < 1 || opcion > max);
         return opcion - 1;
     }
+
+    public String[] mostrarSeccionesDisponibles() {
+        System.out.println("Elija las secciones que desea incluir (Ej. 1,2,3):"
+        + "\n\n1. Análisis conductual cognitivo"
+        + "\n2. Análisis conductual emocional"
+        + "\n3. Análisis conductual estadístico"
+        + "\n4. Análisis conductual simbólico"
+        + "\n5. Análisis jungiano cognitivo"
+        + "\n6. Análisis jungiano emocional"
+        + "\n7. Análisis jungiano estadístico"
+        + "\n8. Análisis jungiano simbólico"
+        + "\n9. Atrás"
+        + "\n\n Opcion:");
+
+        return scanner.nextLine().split(",");
+    }
 }
