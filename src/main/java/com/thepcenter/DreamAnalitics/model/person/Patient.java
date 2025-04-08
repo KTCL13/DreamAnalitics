@@ -8,4 +8,9 @@ public class Patient extends Person{
 
     private List<Dream> dreamList;
     
-}
+
+    public void addDream(Dream dream) {
+        dreamList.add(dream);
+    }
+
+}     
