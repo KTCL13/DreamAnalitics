@@ -1,6 +1,6 @@
 package com.thepcenter.DreamAnalitics.model;
 
-public class Dream {
+public class Dream implements Cloneable{
     private String descripcion;
     private int duracion;
     private String intensidadEmocional;
@@ -57,6 +57,16 @@ public class Dream {
 
     public void setNivelConciencia(String nivelConciencia) {
         this.nivelConciencia = nivelConciencia;
+    }
+
+    
+    @Override
+    public Dream clone() {
+        try {
+            return (Dream) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("No se pudo clonar el objeto Dream", e);
+        }
     }
 
     @Override
