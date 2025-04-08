@@ -1,11 +1,13 @@
 package com.thepcenter.DreamAnalitics.controller;
 
+import com.thepcenter.DreamAnalitics.dto.DreamReport;
 import com.thepcenter.DreamAnalitics.model.Dream;
 import com.thepcenter.DreamAnalitics.model.DreamRepository;
 import com.thepcenter.DreamAnalitics.model.DreamRepositoryFactory;
 import com.thepcenter.DreamAnalitics.model.analysis.Enfoque;
 import com.thepcenter.DreamAnalitics.model.analysis.EnfoqueConductual;
 import com.thepcenter.DreamAnalitics.model.analysis.EnfoqueJungiano;
+import com.thepcenter.DreamAnalitics.service.builder.DreamReportBuilder;
 import com.thepcenter.DreamAnalitics.view.ConsoleView;
 
 import java.util.List;
@@ -29,9 +31,9 @@ public class Control {
             switch (opcion) {
                 case 1 -> mostrarMenuRegistroSueno();
                 case 2 -> aplicarAnalisis();
-                case 3 -> view.mostrarMensaje("📄 Función 'Generar informes' en desarrollo");
+                case 3 -> createReport();
                 case 4 -> seleccionarEnfoqueTerapeutico();
-                case 5 -> view.mostrarMensaje("👋 Saliendo del sistema...");
+                case 5 -> System.exit(0);
                 default -> view.mostrarMensaje("❌ Opción inválida");
             }
         } while (opcion != 5);
@@ -132,5 +134,17 @@ public class Control {
 
     private String formatSeccion(String titulo, String contenido) {
         return titulo + ":\n" + contenido + "\n\n";
+    }
+
+    private void createReport() {
+        List<Dream> sueños = repository.getAllDreams();
+        view.mostrarSueñosEnumerados(sueños);
+        Dream seleccionado = obtenerSuenoParaAnalizar(sueños);
+        String[] selectedSections = view.mostrarSeccionesDisponibles();
+
+        DreamReportBuilder drb = new DreamReportBuilder();
+        DreamReport report = drb.withSummary(seleccionado).withSections(selectedSections, seleccionado).withGraphicInterpretation().build();
+        view.mostrarMensaje(report.toString());
+
     }
 }
