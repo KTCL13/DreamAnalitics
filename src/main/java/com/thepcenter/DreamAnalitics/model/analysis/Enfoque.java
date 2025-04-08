@@ -7,4 +7,5 @@ public interface Enfoque {
     EmotionAnalyzer getEmotionAnalyzer();
     StatisticalAnalyzer getStatisticalAnalyzer();
     CognitiveAnalyzer getCognitiveAnalyzer();
+    List<String> getAnalizadoresActivos();
 }
