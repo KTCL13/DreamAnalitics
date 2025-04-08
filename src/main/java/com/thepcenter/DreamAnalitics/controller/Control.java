@@ -22,39 +22,27 @@ public class Control {
 
     public void iniciar() {
         int opcion;
-        if (repository == null) {
-            inicializarRepositorio(); // ¡Siempre cargar el repositorio al inicio!
-        }
+        inicializarRepositorio();
+
         do {
             opcion = view.mostrarMenuPrincipal();
             switch (opcion) {
-                case 1:
-                    mostrarMenuRegistroSueno();
-                    break;
-                case 2:
-                    view.mostrarMensaje("🔧 Función 'Aplicar método de análisis'");
-                    seleccionarEnfoque(view.seleccionarEnfoqueTerapéutico());
-                    analizarSuenoSeleccionado();
-                    break;
-                case 3:
-                    view.mostrarMensaje("📄 Función 'Generar informes' aún no implementada.");
-                    break;
-                case 4:
-                    view.mostrarMensaje("🎯 Función 'Seleccionar enfoque terapéutico' aún no implementada.");
-                    break;
-                case 5:
-                    view.mostrarMensaje("👋 Saliendo del sistema...");
-                    break;
-                default:
-                    view.mostrarMensaje("Opción inválida.");
+                case 1 -> mostrarMenuRegistroSueno();
+                case 2 -> aplicarAnalisis();
+                case 3 -> view.mostrarMensaje("📄 Función 'Generar informes' en desarrollo");
+                case 4 -> seleccionarEnfoqueTerapeutico();
+                case 5 -> view.mostrarMensaje("👋 Saliendo del sistema...");
+                default -> view.mostrarMensaje("❌ Opción inválida");
             }
         } while (opcion != 5);
     }
 
     private void inicializarRepositorio() {
-        String tipo = view.seleccionarRepositorio();
-        repository = DreamRepositoryFactory.create(tipo);
-        view.mostrarMensaje("Repositorio inicializado: " + tipo);
+        if (repository == null) {
+            String tipo = view.seleccionarRepositorio();
+            repository = DreamRepositoryFactory.create(tipo);
+            view.mostrarMensaje("✅ Repositorio '" + tipo + "' inicializado");
+        }
     }
 
     private void mostrarMenuRegistroSueno() {
@@ -62,75 +50,87 @@ public class Control {
         do {
             opcion = view.mostrarMenuRegistro();
             switch (opcion) {
-                case 1:
-                    Dream nuevo = view.pedirDatosDelSueno();
-                    repository.saveDream(nuevo);
-                    view.mostrarMensaje("✅ Sueño registrado.");
-                    break;
-                case 2:
-                    view.mostrarSueños(repository.getAllDreams());
-                    break;
-                case 3:
-                    view.mostrarMensaje("↩️ Volviendo al menú principal...");
-                    break;
-                default:
-                    view.mostrarMensaje("Opción inválida.");
+                case 1 -> registrarSueno();
+                case 2 -> view.mostrarSueños(repository.getAllDreams());
+                case 3 -> view.mostrarMensaje("↪ Volviendo al menú principal");
+                default -> view.mostrarMensaje("❌ Opción inválida");
             }
         } while (opcion != 3);
     }
 
-    public void seleccionarEnfoque(String tipo) {
-        this.enfoqueSeleccionado = obtenerEnfoque(tipo);
-        System.out.println("Enfoque terapéutico seleccionado: " + tipo);
+    private void registrarSueno() {
+        Dream nuevo = view.pedirDatosDelSueno();
+        repository.saveDream(nuevo);
+        view.mostrarMensaje("💤 Sueño registrado exitosamente");
     }
 
-    public Enfoque obtenerEnfoque(String tipo) {
-        switch (tipo.toLowerCase(Locale.ROOT)) {
-            case "jungiano":
-                return new EnfoqueJungiano();
-            case "conductual":
-                return new EnfoqueConductual();
-            default:
-                throw new IllegalArgumentException("Enfoque terapéutico no reconocido: " + tipo);
-        }
+    private void seleccionarEnfoqueTerapeutico() {
+        String tipo = view.seleccionarEnfoqueTerapéutico();
+        enfoqueSeleccionado = crearEnfoque(tipo);
+        view.mostrarMensaje("\n🎯 Enfoque activo: " + tipo.toUpperCase());
     }
 
-    public Enfoque getEnfoqueSeleccionado() {
-        return enfoqueSeleccionado;
+    private Enfoque crearEnfoque(String tipo) {
+        return switch (tipo.toLowerCase(Locale.ROOT)) {
+            case "jungiano" -> new EnfoqueJungiano();
+            case "conductual" -> new EnfoqueConductual();
+            default -> throw new IllegalArgumentException("Enfoque no soportado: " + tipo);
+        };
     }
-    private void analizarSuenoSeleccionado() {
-        if (repository == null || repository.getAllDreams().isEmpty()) {
-            view.mostrarMensaje("⚠️ No hay sueños registrados para analizar.");
+
+    private void aplicarAnalisis() {
+        if (!validarPrecondicionesAnalisis())
             return;
-        }
-
-        if (enfoqueSeleccionado == null) {
-            view.mostrarMensaje("⚠️ Primero debe seleccionar un enfoque terapéutico (opción 4).");
-            return;
-        }
 
         List<Dream> sueños = repository.getAllDreams();
         view.mostrarSueñosEnumerados(sueños);
 
+        Dream seleccionado = obtenerSuenoParaAnalizar(sueños);
+        String resultado = generarResultadoAnalisis(seleccionado);
+
+        view.mostrarMensaje(resultado);
+    }
+
+    private boolean validarPrecondicionesAnalisis() {
+        if (repository.getAllDreams().isEmpty()) {
+            view.mostrarMensaje("⚠️ No hay sueños registrados");
+            return false;
+        }
+        if (enfoqueSeleccionado == null) {
+            view.mostrarMensaje("⚠️ Seleccione un enfoque primero (Opción 4)");
+            return false;
+        }
+        return true;
+    }
+
+    private Dream obtenerSuenoParaAnalizar(List<Dream> sueños) {
         int indice = view.seleccionarIndiceSueno(sueños.size());
-        Dream seleccionado = sueños.get(indice);
+        return sueños.get(indice);
+    }
 
-        // Aplicar los analizadores del enfoque
+    private String generarResultadoAnalisis(Dream sueno) {
         StringBuilder resultado = new StringBuilder();
-        resultado.append("🔍 Análisis del sueño: ").append(seleccionado.getDescripcion()).append("\n\n");
+        resultado.append("\n🔮 Análisis del sueño: ").append(sueno.getDescripcion()).append("\n\n");
 
-        resultado.append("🧠 Análisis simbólico:\n")
-                .append(enfoqueSeleccionado.getSymbolicAnalyzer().analyze(seleccionado)).append("\n\n");
+        enfoqueSeleccionado.getAnalizadoresActivos()
+                .forEach(tipo -> resultado.append(obtenerSeccionAnalisis(tipo, sueno)));
 
-        resultado.append("💓 Análisis emocional:\n")
-                .append(enfoqueSeleccionado.getEmotionAnalyzer().analyze(seleccionado)).append("\n\n");
+        return resultado.toString();
+    }
 
-        resultado.append("📊 Análisis estadístico:\n")
-                .append(enfoqueSeleccionado.getStatisticalAnalyzer().analyze(seleccionado)).append("\n\n");
+    private String obtenerSeccionAnalisis(String tipo, Dream sueno) {
+        return switch (tipo) {
+            case "symbolic" -> formatSeccion("🧠 Simbólico", enfoqueSeleccionado.getSymbolicAnalyzer().analyze(sueno));
+            case "emotion" -> formatSeccion("💓 Emocional", enfoqueSeleccionado.getEmotionAnalyzer().analyze(sueno));
+            case "statistical" ->
+                formatSeccion("📊 Estadístico", enfoqueSeleccionado.getStatisticalAnalyzer().analyze(sueno));
+            case "cognitive" ->
+                formatSeccion("🧩 Cognitivo", enfoqueSeleccionado.getCognitiveAnalyzer().analyze(sueno));
+            default -> "";
+        };
+    }
 
-        resultado.append("🧩 Análisis cognitivo:\n")
-                .append(enfoqueSeleccionado.getCognitiveAnalyzer().analyze(seleccionado)).append("\n");
-
-        view.mostrarMensaje(resultado.toString());
+    private String formatSeccion(String titulo, String contenido) {
+        return titulo + ":\n" + contenido + "\n\n";
     }
 }

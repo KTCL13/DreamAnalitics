@@ -1,6 +1,9 @@
 package com.thepcenter.DreamAnalitics.model.analysis;
 
-public class EnfoqueJungiano implements Enfoque{
+import java.util.Arrays;
+import java.util.List;
+
+public class EnfoqueJungiano implements Enfoque {
     @Override
     public SymbolicAnalyzer getSymbolicAnalyzer() {
         return new JungianSymbolicAnalyzer();
@@ -19,5 +22,10 @@ public class EnfoqueJungiano implements Enfoque{
     @Override
     public CognitiveAnalyzer getCognitiveAnalyzer() {
         return new JungianCognitiveAnalyzer();
+    }
+
+    @Override
+    public List<String> getAnalizadoresActivos() {
+        return Arrays.asList("symbolic", "emotion");
     }
 }
