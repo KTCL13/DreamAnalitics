@@ -1,6 +1,5 @@
 package com.thepcenter.DreamAnalitics.model;
 
-
 public class Dream {
     private String descripcion;
     private int duracion;
@@ -64,5 +63,6 @@ public class Dream {
     public String toString() {
         return "Descripción: " + descripcion + ", duración: " + duracion + " min, intensidad emocional: " +
                 intensidadEmocional + ", claridad visual: " + claridadVisual + ", nivel de conciencia: " + nivelConciencia;
+
     }
 }
