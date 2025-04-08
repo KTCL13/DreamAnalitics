@@ -5,22 +5,22 @@ import java.util.List;
 
 public class EnfoqueConductual implements Enfoque {
     @Override
-    public SymbolicAnalyzer getSymbolicAnalyzer() {
+    public Analyzer getSymbolicAnalyzer() {
         return new ConductualSymbolicAnalyzer();
     }
 
     @Override
-    public EmotionAnalyzer getEmotionAnalyzer() {
+    public Analyzer getEmotionAnalyzer() {
         return new ConductualEmotionAnalyzer();
     }
 
     @Override
-    public StatisticalAnalyzer getStatisticalAnalyzer() {
+    public Analyzer getStatisticalAnalyzer() {
         return new ConductualStatisticalAnalyzer();
     }
 
     @Override
-    public CognitiveAnalyzer getCognitiveAnalyzer() {
+    public Analyzer getCognitiveAnalyzer() {
         return new ConductualCognitiveAnalyzer();
     }
 

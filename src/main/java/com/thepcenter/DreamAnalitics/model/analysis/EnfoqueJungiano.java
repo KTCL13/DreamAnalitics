@@ -5,22 +5,22 @@ import java.util.List;
 
 public class EnfoqueJungiano implements Enfoque {
     @Override
-    public SymbolicAnalyzer getSymbolicAnalyzer() {
+    public Analyzer getSymbolicAnalyzer() {
         return new JungianSymbolicAnalyzer();
     }
 
     @Override
-    public EmotionAnalyzer getEmotionAnalyzer() {
+    public Analyzer getEmotionAnalyzer() {
         return new JungianEmotionAnalyzer();
     }
 
     @Override
-    public StatisticalAnalyzer getStatisticalAnalyzer() {
+    public Analyzer getStatisticalAnalyzer() {
         return new JungianStatisticalAnalyzer();
     }
 
     @Override
-    public CognitiveAnalyzer getCognitiveAnalyzer() {
+    public Analyzer getCognitiveAnalyzer() {
         return new JungianCognitiveAnalyzer();
     }
 
